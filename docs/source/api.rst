@@ -6,7 +6,3 @@ API
 
    relAI
 
-Functions
----------
-
-.. autofunction:: relAI.create_autoencoder

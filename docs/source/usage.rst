@@ -12,13 +12,6 @@ To use relAI, first install it using pip:
 
    (.venv) $ pip install relAI
 
-Creating recipes
-----------------
-
-To retrieve a list of random ingredients,
-you can use the ``create_autoencoder()`` function:
-
-.. autofunction:: relAI.create_autoencoder
 
 For example:
 

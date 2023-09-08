@@ -558,7 +558,7 @@ def train_autoencoder(ae, training_set, validation_set, batchsize, epochs=1000, 
     return ae
 
 
-def get_and_train_autoencoder(training_set, validation_set, batchsize, layer_sizes=None, epochs=1000,
+def create_and_train_autoencoder(training_set, validation_set, batchsize, layer_sizes=None, epochs=1000,
                                  optimizer=None, loss_function=torch.nn.MSELoss(),
                                  ):
     """

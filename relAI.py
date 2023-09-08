@@ -218,7 +218,7 @@ class DensityPrincipleDetector:
         """
         Initializes an instance of the DensityPrincipleDetector class.
 
-        :param AE autoencoder: The autoencoder model.
+        :param AE (torch.nn.Module) autoencoder: The autoencoder model.
         :param float threshold: The threshold for determining the density reliability.
         """
         self.ae = autoencoder
@@ -495,7 +495,7 @@ def create_autoencoder(layer_sizes):
      symmetry).
 
     :return: An instance of the autoencoder model.
-    :rtype: AE
+    :rtype: AE (torch.nn.Module)
     """
     ae = AE(layer_sizes)
     return ae
@@ -523,7 +523,7 @@ def train_autoencoder(ae, training_set, validation_set, batchsize, epochs=1000, 
         If None, the mean squared error (MSE) loss function will be used (default: torch.nn.MSELoss()).
 
     :return: The trained autoencoder model.
-    :rtype: torch.nn.Module
+    :rtype: AE (torch.nn.Module)
     """
     if optimizer is None:
         optimizer = torch.optim.Adam(ae.parameters(), lr=1e-4, weight_decay=1e-8)
@@ -583,7 +583,7 @@ def create_and_train_autoencoder(training_set, validation_set, batchsize, layer_
         If None, the mean squared error (MSE) loss function will be used (default: torch.nn.MSELoss()).
 
     :return: The trained autoencoder model.
-    :rtype: torch.nn.Module
+    :rtype: AE (torch.nn.Module)
     """
     if layer_sizes is None:
         dim_input = training_set.shape[1]
@@ -999,6 +999,7 @@ def compute_dataset_reliability(RD, X, mode='total'):
 
     This function computes the density/local-fit/total reliability of the samples in the X dataset, based on the mode
     specified, with the ReliabilityPackage RD
+    
     :param ReliabilityDetector RD: A ReliabilityPackage object.
     :param array-like X: the specified dataset
     :param str mode: the type of reliability to compute; Available options: 'density', 'local-fit', 'total'. Default is

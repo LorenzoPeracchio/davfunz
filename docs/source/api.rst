@@ -5,3 +5,7 @@ API
    :toctree: generated
 
    relAI
+
+Functions
+---------
+

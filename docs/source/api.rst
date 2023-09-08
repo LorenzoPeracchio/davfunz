@@ -1,6 +1,21 @@
 API Documentation
 =================
 
+Classes
+---------
+
+.. autoclass:: relAI.CosineActivation
+   :members:
+
+.. autoclass:: relAI.AE
+   :members:
+
+.. autoclass:: relAI.ReliabilityDetector
+   :members:
+
+.. autoclass:: relAI.DensityPrincipleDetector
+   :members:
+
 Functions
 ---------
 

@@ -20,9 +20,6 @@ you can use the ``create_autoencoder()`` function:
 
 .. autofunction:: relAI.create_autoencoder
 
-
-
-
 For example:
 
 >>> import relAI

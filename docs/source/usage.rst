@@ -32,7 +32,7 @@ Build an Autoencoder
 To build an Autoencoder
 you can use the ``relAI.create_autoencoder()`` function:
 
-.. autofunction:: relAI.create_autoencoder
+
 
 For example:
 

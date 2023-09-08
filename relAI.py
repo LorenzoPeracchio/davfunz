@@ -14,22 +14,6 @@ from sklearn import tree
 import plotly.graph_objects as go
 import matplotlib.pyplot as plt
 
-class InvalidKindError(Exception):
-    """Raised if the kind is invalid."""
-    pass
-
-
-def get_random_ingredients(kind=None):
-    """
-    Return a list of random ingredients as strings.
-
-    :param kind: Optional "kind" of ingredients.
-    :type kind: list[str] or None
-    :raise relAI.InvalidKindError: If the kind is invalid.
-    :return: The ingredients list.
-    :rtype: list[str]
-    """
-    return ["shells", "gorgonzola", "parsley"]
 
 class CosineActivation(torch.nn.Module):
     """

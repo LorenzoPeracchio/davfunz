@@ -26,13 +26,6 @@ will raise an exception.
 
 .. autoexception:: lumache.InvalidKindError
 
-Building autoencoder
-----------------
-
-To build the autoencoder,
-you can use the ``lumache.create_autoencoder()`` function:
-
-.. autofunction:: lumache.create_autoencoder
 
 For example:
 

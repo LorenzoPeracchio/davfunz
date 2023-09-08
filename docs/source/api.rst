@@ -9,3 +9,4 @@ API
 Functions
 ---------
 
+.. autofunction:: relAI.create_autoencoder

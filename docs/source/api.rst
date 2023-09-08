@@ -6,8 +6,8 @@ API
 
    relAI
 
-Creating recipes
-----------------
+Functions
+---------
 
 .. autofunction:: relAI.compute_dataset_avg_mse
 

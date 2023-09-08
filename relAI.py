@@ -135,3 +135,125 @@ class AE(torch.nn.Module):
         decoded = self.decoder(encoded)
         return decoded
 
+
+class ReliabilityDetector:
+    """
+    Reliability Detector for assessing the reliability of data points.
+
+    The ReliabilityDetector class computes the reliability of data points based on
+    a specified autoencoder (ae), a proxy model (clf), and an MSE threshold (mse_thresh).
+
+    :param AE ae: The autoencoder model.
+    :param proxy_model: The proxy model used for the local fit reliability computation.
+    :param float mse_thresh: The MSE threshold used for the density reliability computation.
+
+    :ivar AE ae: The autoencoder model.
+    :ivar clf: The proxy model used for the local fit reliability computation.
+    :ivar float mse_thresh: The MSE threshold for the density reliability computation.
+
+    """
+
+    def __init__(self, ae, proxy_model, mse_thresh):
+        """
+        Initializes an instance of the ReliabilityDetector class.
+
+        :param AE ae: The autoencoder model.
+        :param proxy_model: The proxy model used for the local fit reliability computation.
+        :param float mse_thresh: The MSE threshold used for the density reliability computation.
+        """
+        self.ae = ae
+        self.clf = proxy_model
+        self.mse_thresh = mse_thresh
+
+    def compute_density_reliability(self, x):
+        """
+        Computes the density reliability of a data point.
+
+        The density reliability is determined by computing the mean squared error (MSE)
+        between the input data point and its reconstructed representation obtained from
+        the autoencoder. If the MSE is less than (or equal to) the specified MSE threshold,
+        the data point is considered reliable (returns 1), otherwise unreliable (returns 0).
+
+        :param numpy.ndarray x: The input data point.
+
+        :return: The density reliability value (1 for reliable, 0 for unreliable).
+        :rtype: int
+        """
+        mse = mean_squared_error(x, self.ae((torch.tensor(x)).float()).detach().numpy())
+        return 1 if mse <= self.mse_thresh else 0
+
+    def compute_localfit_reliability(self, x):
+        """
+        Computes the local fit reliability of a data point.
+
+        The local fit reliability is determined by using the proxy model to predict the local fit
+        reliability of the input data point. The input data point is reshaped to match the
+        expected input format of the proxy model. The predicted reliability value is returned.
+
+        :param numpy.ndarray x: The input data point.
+
+        :return: The local fit reliability class predicted by the proxy model (1 for reliable, 0 for unreliable).
+        :rtype: int
+        """
+        return self.clf.predict(x.reshape(1, -1))[0]
+
+    def compute_total_reliability(self, x):
+        """
+        Computes the combined reliability of a data point.
+
+        The combined reliability is determined by combining the density reliability and the
+        local fit reliability. If both reliabilities are positive (1), the data point is
+        considered reliable (returns True), otherwise unreliable (returns False).
+
+        :param numpy.ndarray x: The input data point.
+
+        :return: The combined reliability value (True for reliable, False for unreliable).
+        :rtype: bool
+        """
+        density_rel = self.compute_density_reliability(x)
+        localfit_rel = self.compute_localfit_reliability(x)
+        return density_rel and localfit_rel
+
+
+class DensityPrincipleDetector:
+    """
+    Density Principle Detector for assessing the density reliability of data points.
+
+    The DensityPrincipleDetector class computes the density reliability of data points based on
+    a specified autoencoder (autoencoder) and a threshold (threshold).
+
+    :param AE autoencoder: The autoencoder model.
+    :param float threshold: The threshold for determining the density reliability.
+
+    :ivar AE ae: The autoencoder model.
+    :ivar float thresh: The threshold for determining the density reliability.
+    
+    """
+
+    def __init__(self, autoencoder, threshold):
+        """
+        Initializes an instance of the DensityPrincipleDetector class.
+
+        :param AE autoencoder: The autoencoder model.
+        :param float threshold: The threshold for determining the density reliability.
+        """
+        self.ae = autoencoder
+        self.thresh = threshold
+
+    def compute_reliability(self, x):
+        """
+        Computes the density reliability of a data point.
+
+        The density reliability is determined by computing the mean squared error (MSE)
+        between the input data point and its reconstructed representation obtained from
+        the autoencoder. If the MSE is less than or equal to the specified threshold,
+        the data point is considered reliable (returns 1), otherwise unreliable (returns 0).
+
+        :param numpy.ndarray x: The input data point.
+
+        :return: The density reliability value (1 for reliable, 0 for unreliable).
+        :rtype: int
+        """
+        mse = mean_squared_error(x, self.ae((torch.tensor(x)).float()).detach().numpy())
+        return 1 if mse <= self.thresh else 0
+

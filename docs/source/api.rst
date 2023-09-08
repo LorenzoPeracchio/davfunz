@@ -6,9 +6,6 @@ API
 
    relAI
 
-Functions
----------
-
 .. autofunction:: relAI.compute_dataset_avg_mse
 
 .. autofunction:: relAI.compute_dataset_reliability

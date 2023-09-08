@@ -16,20 +16,17 @@ Creating recipes
 ----------------
 
 To retrieve a list of random ingredients,
-you can use the ``relAI.get_random_ingredients()`` function:
+you can use the ``create_autoencoder()`` function:
 
-.. autofunction:: relAI.get_random_ingredients
+.. autofunction:: relAI.create_autoencoder
 
-The ``kind`` parameter should be either ``"meat"``, ``"fish"``,
-or ``"veggies"``. Otherwise, :py:func:`relAI.get_random_ingredients`
-will raise an exception.
 
-.. autoexception:: relAI.InvalidKindError
 
 
 For example:
 
 >>> import relAI
->>> relAI.get_random_ingredients()
+>>> layer_sizes = [1, 2, 3]
+>>> relAI.create_autoencoder(layer_sizes)
 ['shells', 'gorgonzola', 'parsley']
 
